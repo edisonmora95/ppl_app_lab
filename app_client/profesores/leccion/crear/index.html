@@ -150,14 +150,13 @@
               <span>Escoger las preguntas</span>
             </div>
             <main>
-              <div class="tiempo" style="position: fixed">
-                <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i> <h4>{{preguntas_escogidas.tiempoTotal}} Min</h4>
-              </div>
               <div class="container" id="capitulos">
                 <div class="row">
-                  <!-- <div class="col s1 m1s">
-                    {{preguntas_escogidas.tiempoTotal}}
-                  </div> -->
+                  <div class="col s1 m1 offset-s11">
+                    <div class="tiempo pull right" style="position: fixed">
+		                <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i> <h4>{{preguntas_escogidas.tiempoTotal}} Min</h4>
+		            </div>
+                  </div>
                   <div class="col s7 m9 l10">
                     <div v-for="capitulo in capitulosAMostrar" class="capitulo scrollspy section" v-bind:id="capitulo._id">
                       <ul class="preguntas collapsible" data-collapsible="accordion">
