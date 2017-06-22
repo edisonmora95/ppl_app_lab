@@ -64,7 +64,7 @@
               <div class="row">
                 <div class="input-field col s6">
                   <label for="fechaInicio" class="active">Fecha Inicio</label>
-                   <input id="datePicker" name="fecha" placeholder="fecha">
+                   <input id="datePicker" name="fecha" placeholder="fecha" v-model="leccion_nueva.fechaInicio">
                   <!-- <input v-model="leccion_nueva.fechaInicio" type="date" id="datePicker" name="fecha"> -->
                 </div>
                 <div class="input-field col s6" id="tipoLeccion">
@@ -193,9 +193,10 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="row col s10">
+                  <div class="row s5 long-form-button">
                     <button type="button" v-on:click="avanzarPestania('test1','#t1')" id="btnats1" class="btn">atras</button>
-                    <button type="button" v-on:click="avanzarPestania('test4','#t4')" id="btnsgt2" class="btn pull right">siguiente</button>
+
+                    <button type="button" v-on:click="validarLeccionSinPreguntas()" id="btnsgt2" class="btn pull right tooltipc">siguiente</button>
                   </div>
                   <div class="col s4 hide-on-small-only m3 l2">
                     <ul class="section table-of-contents">
@@ -233,7 +234,8 @@
   	              <div>
   	                <p class="collection-item"><span class="badge">Tiempo Estimado</span>Pregunta</p>
   	                <li v-for="pregunta in preguntas_escogidas.preguntas" class="collection-item">
-  	                  <input type="checkbox" name = "" v-bind:id="pregunta._id" onclick="preguntaSeleccionada(this)" checked class="filled-in">
+  	                  //aquiiii
+                      <input type="checkbox" name = "" v-bind:id="pregunta._id" onclick="preguntaSeleccionada(this)" checked class="filled-in">
   	                    <label v-bind:for="pregunta._id" class="maxWidth">
                           <span class="title">{{pregunta.capitulo}}</span>
                           <span class="title">{{pregunta.laboratorio}}</span>

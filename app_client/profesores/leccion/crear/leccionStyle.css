@@ -19,6 +19,7 @@ p.collection-item{
 li.question{
     margin-bottom: 5%;
 }
+
 .strike {
     display: block;
     text-align: center;
@@ -38,6 +39,13 @@ li.question{
     width: 9999px;
     height: 1px;
     background: rgba(0,0,0,0.5);
+}
+
+.long-form-button {
+  position: fixed;
+  bottom: 3px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .strike > span:before {

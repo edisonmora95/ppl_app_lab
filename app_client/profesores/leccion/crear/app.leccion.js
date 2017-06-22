@@ -9,6 +9,20 @@ var App = new Vue({
     $('#modalNuevoCapitulo').modal();
     $('select').material_select();
     $('.modal').modal();
+
+    $(".tooltip").tooltipster({
+          theme: 'tooltipster-punk',
+          position: 'top',
+          maxWidth: 100,
+          height: 50,
+          contentCloning: true,
+          arrow: false,
+          delay: 50,
+          timer: 3000,
+          animation: 'fade',
+          multiple: true,
+          
+          contentAsHTML: true});
     $('.collapsible').collapsible({
       onOpen: function(el) {
         var self = this;
@@ -104,7 +118,7 @@ var App = new Vue({
       tabs = document.querySelectorAll(".tab");
       for (index = 0; index < tabs.length; ++index) {
         
-          console.log(tabs[index]);
+          //console.log(tabs[index]);
           $(tabs[index]).addClass("disabled");
           
 
@@ -116,6 +130,26 @@ var App = new Vue({
 
       
     },
+    validarLeccionSinPreguntas: function(){
+      var self = this;
+      console.log(this.preguntas_escogidas.tiempoTotal);
+      
+          //v-on="mouseover: validarLeccionSinPreguntas " 
+
+      if(! $('input:checkbox').prop('checked')){
+
+       // $("#btnsgt2").addClass("tooltip");
+        $(".tooltip").tooltipster('content', 'No ha seleccionado ninguna pregunta')
+        $(".tooltip").tooltipster("open");
+        
+      }else{
+        //AQUI NOS QUEDAMOS
+         
+        this.avanzarPestania('test4','#t4');
+      }
+    },
+
+
     validarCamposVacios: function(){
       var self = this;
       this.sanitize('test1');
