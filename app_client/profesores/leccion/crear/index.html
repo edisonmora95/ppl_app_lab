@@ -40,8 +40,8 @@
                     <label for="nombre">Nombre</label>
                     <input v-model="leccion_nueva.nombre" class="form-control " type="text" name="nombre" id="lblNombre" placeholder="nombre de leccion">
                   </div>
-                  <div class="input-field col s6" id="materias" v-show="profesor.tipo == 'peer'">
-                    <select id="subject">
+                  <div class="input-field col s6" id="materias">
+                    <select multiple id="subject">
                       <option value="#" selected disabled>Escoger Materia...</option>
                       <option value="FISG1002">Física 2</option>
                       <option value="FISG1003">Física 3</option>
@@ -53,9 +53,11 @@
                   </div>
 
                   <!-- profesor -->
-                  <div class="input-field col s6" id="materias" v-show="profesor.tipo == 'titular'">
+                  <!-- 
+                    <div class="input-field col s6" id="materias" v-show="profesor.tipo == 'titular'">
                     <label>Materia: </label> <br> <p>{{leccion_nueva.nombreMateria}}</p>
-                  </div>
+                    </div>
+                  -->
                   <div class="input-field col s6" id="div-select" v-show="profesor.tipo == 'titular'">
                     <label>Paralelo: </label><br> <p>{{paraleloEscogido.nombre}}</p>
                   </div>
@@ -161,7 +163,10 @@
                     <div v-for="capitulo in capitulosAMostrar" class="capitulo scrollspy section" v-bind:id="capitulo._id">
                       <ul class="preguntas collapsible" data-collapsible="accordion">
                         <li>
-                          <div class="collapsible-header" v-on:click="collapsibleClicked($event)"><h5>{{capitulo.nombre}}</h5></div>
+                          <div class="collapsible-header" v-on:click="collapsibleClicked($event)">
+                                                                        <span><h6>({{capitulo.nombreMateria}})</h6></span>
+                                                                        <h5>{{capitulo.nombre}}</h5>
+                          </div>
                           <div class="collapsible-body question" v-for="pregunta in capitulo.preguntas">
                             <div v-bind:id="'tooltip-' + pregunta._id"
                                v-on:mouseover="showTooltip(pregunta._id, pregunta.descripcion, pregunta.tiempoEstimado)">

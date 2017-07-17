@@ -33,6 +33,7 @@ var App = new Vue({
     obtenerLogeado: function() {
       this.$http.get('/api/session/usuario_conectado').then(response => {
         this.profesor = response.body.datos;
+        console.log(this.profesor);
       })
     },
     toHTML: function (str){
@@ -585,12 +586,12 @@ $("#subject").change(function(){
   //Filtrando para física 2
   if(materia == "FISG1002"){
    App.paralelo_filtrado = App.paralelos.filter(filtrarParalelo2);
-   App.leccion_nueva.nombreMateria = "Física 2"
+   //App.leccion_nueva.nombreMateria = "Física 2"
   }
   //Filtrando para física 3
   if(materia == "FISG1003"){
    App.paralelo_filtrado = App.paralelos.filter(filtrarParalelo3);
-   App.leccion_nueva.nombreMateria = "Física 3"
+   //App.leccion_nueva.nombreMateria = "Física 3"
   }
   //Eliminando y agregando label donde serán colocados los paralelos.
   $("#div-select").empty();
