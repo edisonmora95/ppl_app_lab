@@ -71,40 +71,22 @@
 						<h3>{{estudiante.nombres + ' ' + estudiante.apellidos}}</h3>
 						<p class="gris">{{estudiante.correo}}</p>
 					</section>
-					<section>
-						<table class="bordered responsive-table centered tabla">
-							<thead>
-								<tr class="titles">
-									<th>Nombre</th>
-									<th>Estado</th>
-									<th>Tipo</th>
-									<th>Calificación</th>
-									<th>Fecha</th>
-									<th>   </th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr v-for="leccion in lecciones">
-									<td>{{leccion.leccion.nombre}}</td>
-									<td>{{leccion.leccion.estado}}</td>
-									<td>{{leccion.leccion.tipo}}</td>
-									<td>{{leccion.calificacion}}</td>
-									<td>{{date(leccion.fechaEmpezado)}}</td>
-									<td v-if="leccion.leccion.estado === 'terminado' || leccion.leccion.estado === 'calificado'">
-											<button class="btn waves-effect waves-light" v-bind:id=leccion.leccion._id v-on:click="verLeccion($event)">Ver</button>
-									</td>
-									<td v-else-if="leccion.leccion.estado === 'pendiente' || leccion.leccion.estado === 'tomando'">
-										<button class="btn waves-effect waves-light blue lighten-1" v-on:click="tomarLeccion()">Tomar</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</section>
+					
 				</div>
 			</div>
 		</main>
-		<footer>
-			<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<footer class="page-footer #e0e0e0 grey lighten-2">
+
+
+	          <div class="footer-copyright">
+	            <div class="container #e0e0e0 grey lighten-2">
+	            
+	            <li><a class="#0d47a1 blue-text text-darken-4" href="#!"><center>Escuela Superior Politécnica del Litoral - Campus Gustavo Galindo - Guayaquil - Ecuador
+© El contenido de esta obra es de propiedad intelectual de la ESPOL. Todos los derechos reservados. Prohibida su reproducción total o parcial, comunicación
+pública o distribución sin autorización previa del titular de los derechos</center></a></li>
+	            </div>
+	          </div>
+	        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 			<script src="/bower_components/vue/dist/vue.min.js"></script>
 			<script src="/bower_components/materialize/bin/materialize.js"></script>
 			<script src="/bower_components/moment/moment.js"></script>
