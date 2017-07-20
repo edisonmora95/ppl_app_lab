@@ -17,5 +17,6 @@ router.get('/paralelos/lecciones/:id_paralelo',authApi.profesor, LeccionControll
 
 router.get('/:id_leccion/calificada' ,authApi.profesor, LeccionController.leccionYaCalificada);
 
+router.get('/recalificar/:id_leccion', LeccionController.obtenerLeccionRecalificar);
 
 module.exports = router;

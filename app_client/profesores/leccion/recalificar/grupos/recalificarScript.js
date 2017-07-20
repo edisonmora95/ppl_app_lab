@@ -21,13 +21,15 @@ var appRecalificar = new Vue({
 	},
 	data: {
 		profesor: {},
-		registros: [],
-		grupos: [],
-		grupoSeleccionado: {},
-    estudiantes: [],
-    estudianteEscogido: {}
+		registros: [],    //Registros de las calificaciones de todos los grupos de la lección a recalificar
+		grupoSeleccionado: {},    //Grupo seleccionado para recalificar la lección
+    estudianteEscogido: {}    //Estudiante seleccionado para recalificar la lección
 	},
 	methods:{
+    /*
+      @Descripción: 
+        Obtengo la sesión del usuario conectado, en este caso es un profesor, y la guardo en self.profesor
+    */
 		profesorLogeado: function() {
       var self = this;
       $.get({
@@ -39,8 +41,13 @@ var appRecalificar = new Vue({
         }
       });
 		},
+    /*
+      @Descripción:
+        Obtengo los registros de calificación de cada grupo de la lección en la que estoy.
+        Los almaceno en self.registros
+        
+    */
 		obtenerRegistrosCalificaciones: function(){
-      //Obtiene los registros de las calificaciones de la lección que se quiere calificar
       var self = this;
       var pathname = window.location.pathname;
       var idLeccion = pathname.split('/')[5];
@@ -48,73 +55,40 @@ var appRecalificar = new Vue({
       $.get({
         url: urlApi,
         success: function(res){
-          self.registros = res.datos;
-          self.obtenerTodosGrupos();
+          //Gracias a @Joel, tengo que eliminar un registro con grupo NULL...
+          self.registros = $.grep(res.datos, function(registro){
+            return registro.grupo != null;
+          });
+          //Ordeno los registros por nombre
+          self.registros.sort(function(r1, r2){
+            var nombreR1 = r1.grupo.nombre;
+            var numeroR1 = parseInt(nombreR1.split(" ")[1]);
+            var nombreR2 = r2.grupo.nombre;
+            var numeroR2 = parseInt(nombreR2.split(" ")[1]);
+            return ((numeroR1 < numeroR2) ? -1 : ((numeroR1 > numeroR2) ? 1 : 0));
+          });
         }
-      })
-    },
-    obtenerTodosGrupos: function(){
-    	//Obtengo todos los grupos para comparar con los de los registros y obtener sus nombres
-      var self = this;
-      $.get({
-        url: '/api/grupos',
-        success: function(res){
-          self.grupos = res.datos;
-          self.buscarNombreGrupos();
-        }
-      })
-    },
-    buscarNombreGrupos: function(){
-      //Esta función añade el nombre de cada grupo del array de registros obtenidos.
-      //Busca el nombre del grupo dentro del array grupos.
-      
-      var self = this;
-      $.each(self.registros, function(index, registro){
-        $.each(self.grupos, function(j, grupo){
-          if(registro.grupo==grupo._id){
-            registro.nombreGrupo = grupo.nombre;
-            return false
-          }
-        });
-      });
-      //Los ordeno por nombre
-      self.registros.sort(function(r1, r2){
-        var nombreR1 = r1.nombreGrupo;
-        var numeroR1 = parseInt(nombreR1.split(" ")[1]);
-        var nombreR2 = r2.nombreGrupo;
-        var numeroR2 = parseInt(nombreR2.split(" ")[1]);
-        return ((numeroR1 < numeroR2) ? -1 : ((numeroR1 > numeroR2) ? 1 : 0));
-      });
-    },
-    buscarNombreEstudiantes: function(){
-      //Busco el nombre de los estudiantes del grupo seleccionado para calificar para mostrarlos en la pestaña 'Seleccionar estudiantes'
-      var self = this;
-      self.estudiantes = [];  //Tengo que vaciarlo para que si el usuario selecciona un grupo y luego otro entonces no se acumulen los estudiantes en este array
-      $.each(self.grupoSeleccionado.participantes, function(index, estudiante){
-        //Por cada estudiante del grupo seleccionado, hago una llamada a la api para conseguir su nombre.
-        var urlApi = '/api/estudiantes/' + estudiante;
-        $.get({
-          url: urlApi,
-          success: function(res){
-            self.estudiantes.push(res.datos);
-          }
-        });
       });
     },
     //Eventos
     seleccionarGrupo: function(registro){
-    	this.grupoSeleccionado = registro;
-    	this.buscarNombreEstudiantes();
+      this.grupoSeleccionado = registro;
     },
     seleccionarEstudiante: function(estudiante){
-    	this.estudianteEscogido = estudiante;
+      this.estudianteEscogido = estudiante;
     },
+    /*
+      @Descripción:
+        Redirige a la ventana de recalificación de lección si se ha seleccionado un grupo y un estudiante
+    */
     recalificarRedireccion: function(){
       var self = this;
-			if (self.estudianteEscogido){
-		  	var leccionId = window.location.href.toString().split('/')[7];
-		  	window.location.href = '/profesores/leccion/recalificar/'+leccionId+'/'+ self.estudianteEscogido._id + '/' + self.grupoSeleccionado.grupo;
-			}
-		}
+      if (self.estudianteEscogido.nombres != null){
+        var leccionId = window.location.href.toString().split('/')[7];
+        window.location.href = '/profesores/leccion/recalificar/'+leccionId+'/'+ self.estudianteEscogido._id + '/' + self.grupoSeleccionado.grupo._id;
+      }else{
+        Materialize.toast('Debe seleccionar a un estudiante para recalificar la lección.', 2000);
+      }
+    }
 	}
 });

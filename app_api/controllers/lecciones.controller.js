@@ -20,6 +20,14 @@ const obtenerLeccionesParalelo = (req, res) => {
   })
 }
 
+const obtenerLeccionRecalificar = (req, res) => {
+  const { id_leccion } = req.params
+  LeccionModel.obtenerLeccionPopulate(id_leccion, (err, leccion) => {
+    if (err) return respuesta.serverError(res);
+    return respuesta.ok(res,leccion);
+  });
+}
+
 const obtenerLeccion = (req, res) => {
   const { id_leccion } = req.params
   LeccionModel.obtenerLeccion(id_leccion, (err, leccion) => {
@@ -174,6 +182,7 @@ module.exports = {
   actualizarLeccion,
   eliminarLeccion,
   leccionYaCalificada,
+  obtenerLeccionRecalificar,
   // realtime
   tomarLeccion,
   anadirTiempo,

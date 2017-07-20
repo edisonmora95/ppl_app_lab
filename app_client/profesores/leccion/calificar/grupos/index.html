@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Calificar Leccion</title>
+    <title>Grupos Leccion</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./gruposLeccionStyle.css">
     <link rel="stylesheet" type="text/css" href="/css/navbar.css">
-    
+
     <!-- fin de scripts navbar-->
   </head>
   <body>
@@ -35,8 +35,8 @@
                 <div class="row">
                   <div class="input-field col s12" v-for="(registro, index) in registrosAMostrar">
                     <p>
-                      <input name="group1" type="radio" class="left-align flow-text" v-bind:id="registro.grupo" onclick="grupoSeleccionado(this)">
-                      <label v-bind:for="registro.grupo">{{registro.nombreGrupo}}</label>
+                      <input name="group1" type="radio" class="left-align flow-text" v-bind:id="registro.grupo._id" onclick="grupoSeleccionado(this)">
+                      <label v-bind:for="registro.grupo._id">{{registro.nombreGrupo}}</label>
                     </p>
                   </div>
                 </div>

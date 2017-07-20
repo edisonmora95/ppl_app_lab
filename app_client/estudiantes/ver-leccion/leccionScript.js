@@ -79,11 +79,12 @@ var App = new Vue({
       var self = this;
       $.each(respuestasPorPregunta, function(index, value){
         //En teoría el feedback es sólo para una persona
-        if(index == 0){
+        if(index == 0 && value.feedback != ""){
           	self.feedback.push(value.feedback);
           	return;
         }
       })
+      self.feedback.push("No hay feedback que mostrar");
     },
     obtenerCalificacion: function(respuestasPorPregunta){
       var self = this;

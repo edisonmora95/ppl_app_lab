@@ -82,7 +82,7 @@ var App = new Vue({
 					}
 				}
 			});
-			
+
 		},
 		getEstudiante: function(){
 			var estudianteId = window.location.href.toString().split('/')[7];
@@ -100,12 +100,12 @@ var App = new Vue({
 		//Eventos
 		calificar: function(pregunta){
 			var self = this;
-			
+
 			var urlApi = '/api/respuestas/calificar/leccion/' + self.leccionId + '/pregunta/' + pregunta._id + '/grupo/' + self.grupo;
-			
+
 			var calificacionId = '#calificacion-' + pregunta._id;
 			var calificacion_pregunta = $(calificacionId).val();	//Calificación dada a la pregunta: 0, 1 ó 2
-			var puntaje_pregunta = parseInt(pregunta.puntaje);		//Puntaje de la pregunta al momento de crearla. 
+			var puntaje_pregunta = parseInt(pregunta.puntaje);		//Puntaje de la pregunta al momento de crearla.
 			var feedbackId = '#feedback-' + pregunta._id;
 			var feedback_nuevo = $(feedbackId).val();
 			//No se permite darle una calificación mayor a 2. Puede ser 0, 1 ó 2.
@@ -150,7 +150,7 @@ var App = new Vue({
 					}else{
 						$('modalErrorCalificar').modal('open');
 					}
-					
+
 				}
 			})
 		},

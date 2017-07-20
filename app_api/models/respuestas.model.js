@@ -46,7 +46,10 @@ const respuestasSchema = mongoose.Schema({
   },
 	feedback: {
 		type: String
-	}
+	},
+  imagenes:{
+    type: String
+  }
 }, {versionKey: false, timestamps: true, collection: 'respuestas'})
 
 respuestasSchema.methods.crearRespuesta = function(callback){
@@ -61,6 +64,14 @@ respuestasSchema.statics.obtenerRespuestaDeEstudiante = function(id_leccion, id_
   this.findOne({$and: [{leccion:id_leccion}, {pregunta:id_pregunta}, {estudiante:id_estudiante}]}, callback);
 }
 
+respuestasSchema.statics.obtenerRespuestasDeEstudianteRecalificacion = function(id_leccion, id_estudiante, callback){
+  //this.find({$and: [{leccion:id_leccion}, {estudiante:id_estudiante}]}, callback);
+  this.find({$and: [{leccion:id_leccion}, {estudiante:id_estudiante}]})
+        .populate('leccion')
+        .populate('estudiante')
+        .populate('pregunta')
+        .exec(callback);
+}
 respuestasSchema.statics.obtenerRespuestasDeEstudiante = function(id_leccion, id_estudiante, callback){
   this.find({$and: [{leccion:id_leccion}, {estudiante:id_estudiante}]}, callback);
 }

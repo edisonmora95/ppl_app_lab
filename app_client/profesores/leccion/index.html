@@ -26,7 +26,7 @@
                   <th>Fecha creada</th>
 				  				<th>Fecha tomada</th>
                   <th>Hora terminada</th>
-				  				<!-- <th>Estado</th> -->
+				  				<th>Estado</th>
 				  				<th>Acción</th>
 			  				</tr>
 			  			</thead>
@@ -38,7 +38,7 @@
                   <td class="text-flow">{{dateInicio(leccion.fechaInicio)}}</td>
 			  					<td class="text-flow">{{date(leccion.fechaInicioTomada)}}</td>
                   <td class="text-flow">{{dateTerminada(leccion, leccion.tiempoEstimado)}}</td>
-			  					<!-- <td class="text-flow">{{leccion.estado}}</td> -->
+			  					<td class="text-flow">{{leccion.estado}}</td>
 			  					<td v-if="leccion.estado=='pendiente'" v-if="profesor.tipo =='titular'">
 			  						<a class="waves-effect waves-light btn btn-tomar btn-small-new #0277bd light-blue darken-3" @click="tomarLeccion(leccion.paralelo, leccion._id)">Tomar</a>
 			  					</td>
@@ -48,9 +48,9 @@
 			  					<td v-else-if="leccion.estado=='tomando' && profesor.tipo =='titular'">
 			  						<a class="waves-effect waves-light btn btn-tomar btn-small-new" @click="tomandoLeccion(leccion.paralelo, leccion._id)">Entrar</a>
 			  					</td>
-			  					<!--<td v-else-if="leccion.estado === 'calificada' && profesor.tipo === 'titular'">
+			  					<td v-else-if="leccion.estado === 'calificada' && profesor.tipo === 'titular'">
 			  						<a class="waves-effect waves-light btn btn-tomar btn-small-new" @click="recalificarLeccion(leccion._id)">Recalificar</a>
-			  					</td>-->
+			  					</td>
 			  					<td v-if="leccion.estado=='pendiente'">
 			  						<a href="#" class="right-align btn-eliminar pull right" v-bind:id="leccion._id" v-on:click="crearModalEliminarLeccion(leccion._id, leccion.nombre)"><i class="material-icons tiny">delete</i></a>
 			  					</td>

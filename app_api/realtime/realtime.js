@@ -4,6 +4,7 @@ MongoClient  = require('mongodb').MongoClient,
 moment       = require('moment'),
 tz           = require('moment-timezone'),
 logger       = require('tracer').colorConsole(),
+CronJob = require('cron').CronJob,
 co           = require('co');
 
 require("moment-duration-format");
@@ -18,6 +19,8 @@ LeccionModel         = require('../models/leccion.model');
 // var highestTimeoutId = setTimeout(function(){});
 // var noofTimeOuts = setTimeout('')
 var intervals = []
+var crons = []
+var crons_intervals = []
 
 function realtime(io) {
   var leccion = io.of('/tomando_leccion');
@@ -41,27 +44,34 @@ function realtime(io) {
         console.log(`fecha inicio ${INICIO_LECCION.format('YY/MM/DD hh:mm:ss')}`);
         const TIEMPO_MAXIMO = INICIO_LECCION.add(LECCION_TOMANDO.tiempoEstimado, 'm')
         console.log(`tiempo maximo ${TIEMPO_MAXIMO.format('YY/MM/DD hh:mm:ss')}`);
-        var hec = yield cleanIntervals(intervals, socket.leccion._id)
+        var hecc = yield cleanCrons(crons_intervals, socket.leccion._id);
+
         if (boton) {
           var c = yield corriendoTiempo(socket.leccion._id, true);
           leccion.in(PARALELO._id).emit('empezar leccion', 6000) // sirve para redirigir a todos los estudiantes una vez  que empieze la leccoin
         }
-        socket.interval = setInterval(function() {
-          let tiempo_rest = TIEMPO_MAXIMO.subtract(1, 's');
-          var duration = moment.duration(tiempo_rest.diff(CURRENT_TIME_GUAYAQUIL)).format("h:mm:ss");
-          if (!isNaN(duration)) { // FIXME: si se recarga la pagina antes que llege a cero continua
-            if (parseInt(duration) == 0) {
-              clearInterval(socket.interval);
-              leccionTerminada(PARALELO, PARALELO.leccion)
-              leccion.in(PARALELO._id).emit('terminado leccion', true)
+        var job = new CronJob({
+          cronTime: '* * * * * *', // ejecuta cada segundo lo de onTick
+          onTick: function() {
+            let tiempo_rest = TIEMPO_MAXIMO.subtract(1, 's');
+            var duration = moment.duration(tiempo_rest.diff(CURRENT_TIME_GUAYAQUIL)).format("h:mm:ss");
+            if (!isNaN(duration)) {
+              if (parseInt(duration) == 0) {
+                cleanCrons(crons_intervals, PARALELO.leccion);
+                leccionTerminada(PARALELO, PARALELO.leccion)
+                leccion.in(PARALELO._id).emit('terminado leccion', true)
+              }
             }
-          }
-          leccion.in(PARALELO._id).emit('tiempo restante', duration) // envia el tiempo a todos los estudiante de un curso
-        }, 1000)
-        socket.interval.ref()
+            leccion.in(PARALELO._id).emit('tiempo restante', duration) // envia el tiempo a todos los estudiante de un curso
+          },
+          onComplete: function() {
+            console.log(`Terminada ejecucion del cron la leccion ${PARALELO.leccion}`);
+          },
+          start: true,
+        })
         var leccion_id = socket.leccion._id
-        intervals.push({leccion_id: leccion_id, interval: socket.interval})
-        console.log(intervals);
+        crons_intervals.push({leccion_id: leccion_id, job: job});
+        console.log(crons_intervals);
       }).catch(fail => console.log(fail))
     }
 
@@ -152,7 +162,8 @@ function realtime(io) {
             let leccionR = yield obtenerLeccionRealtime(paralelo.leccion)
             leccion.in(paralelo._id).emit('leccion datos', leccionR)
           } else {
-            var limpiado = yield cleanIntervals(intervals, socket.leccion._id)
+            var hecc = yield cleanCrons(crons_intervals, socket.leccion._id);
+            // var limpiado = yield cleanIntervals(intervals, socket.leccion._id)
           }
         }
       }).catch(fail => console.log(fail))
@@ -164,7 +175,7 @@ function realtime(io) {
         // TODO: verificar que sea un profesor
         const profesor = yield obtenerProfesor(socket.user)
         const PARALELO = yield obtenerParaleloProfesorPromise(profesor)
-        var limpiado = yield cleanIntervals(intervals, socket.leccion._id)
+        var hecc = yield cleanCrons(crons_intervals, socket.leccion._id);
         leccionTerminada(PARALELO, PARALELO.leccion)
         leccion.in(PARALELO._id).emit('terminado leccion', true)
       }).catch(fail => console.log(fail))
@@ -188,7 +199,7 @@ module.exports = realtime
 
 function cleanIntervals(todos_intervals, id_leccion) {
   return new Promise((resolve, reject) => {
-    intervals = intervals.filter(inicial => {
+    intervals = intervals.filter(inicial => { // intervals es variable global
       if (inicial.leccion_id != id_leccion) {
         return inicial
       } else {
@@ -196,6 +207,19 @@ function cleanIntervals(todos_intervals, id_leccion) {
       }
     })
     return resolve(intervals)
+  })
+}
+
+function cleanCrons(todos_crons, id_leccion) {
+  return new Promise((resolve, reject) => {
+    crons_intervals = crons_intervals.filter(inicial => { // crons_intervals es variable global
+      if (inicial.leccion_id != id_leccion) {
+        return inicial
+      } else {
+        inicial.job.stop()
+      }
+    })
+    return resolve(crons_intervals)
   })
 }
 

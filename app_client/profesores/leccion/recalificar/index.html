@@ -24,23 +24,23 @@
       		<div class="row row-pregunta">
     		    <div class="col s12 col-pregunta">
     		      <label for="nombre">Nombre de la Pregunta</label>
-              <p v-if="pregunta.tipoPregunta == 'justificacion'" name="nombre">{{pregunta.nombre}}</p>
+              <p v-if="pregunta.pregunta.tipoPregunta == 'justificacion'" name="nombre">{{pregunta.pregunta.nombre}}</p>
     		      <label for="descripcion">Descripción</label>
-    		      <p v-if="pregunta.tipoPregunta == 'justificacion'" v-html="pregunta.descripcion" name="descripcion"></p>
-              <p class="pull right">Puntaje de pregunta: {{pregunta.puntaje}} puntos</p>
+    		      <p v-if="pregunta.pregunta.tipoPregunta == 'justificacion'" v-html="pregunta.pregunta.descripcion" name="descripcion"></p>
+              <p class="pull right">Puntaje de pregunta: {{pregunta.pregunta.puntaje}} puntos</p>
             </div>
           </div>
           <div class="row row-res-cal">
             <div class="col s7 col-respuesta">
               <label for="respuesta">Respuesta del Estudiante</label>
-              <p>{{pregunta.respuesta.respuesta}}</p>
+              <p>{{pregunta.pregunta.respuesta.respuesta}}</p>
             </div>
             <div class="col s5 col-calificacion">
               <label for="calificacion">Calificación</label>
-              <input type="number" name="calificacion" min="0" max="2" v-bind:id="'calificacion-' + pregunta._id" v-model="pregunta.respuesta.calificacion">
+              <input type="number" name="calificacion" min="0" max="2" v-bind:id="'calificacion-' + pregunta.pregunta._id" v-model="pregunta.pregunta.respuesta.calificacionPonderada">
               <label for="feedback">Feedback</label>
-              <textarea v-model="pregunta.respuesta.feedback" class="materialize-textarea" name="feedback" :id="'feedback-' + pregunta._id"></textarea>
-              <button class="waves-effect waves-light btn pull right" @click="recalificar(pregunta)" v-bind:id="'btn-' + pregunta._id">Calificar</button>
+              <textarea v-model="pregunta.pregunta.respuesta.feedback" class="materialize-textarea" name="feedback" :id="'feedback-' + pregunta.pregunta._id"></textarea>
+              <button class="waves-effect waves-light btn pull right" @click="recalificar(pregunta.pregunta)" v-bind:id="'btn-' + pregunta.pregunta._id">Recalificar</button>
             </div>
           </div>
         </section>
@@ -58,7 +58,7 @@
       <!-- Modal Structure -->
       <div id="myModal" class="modal">
         <div class="modal-content">
-          <p class="center-align">Lección calificada correctamente</p>
+          <p class="center-align">Lección recalificada correctamente</p>
         </div>
         <div class="modal-footer">
           <a  @click="regresar" id="crear" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>

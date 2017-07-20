@@ -10,12 +10,12 @@ const crearRespuesta = (req, res) => {
 		grupo: req.body.grupo,
 		contestado: req.body.contestado,
 		respuesta: req.body.respuesta,
+		imagenes: req.body.imagenes,
 		//fechaEmpezado: req.body.fechaEmpezado,
 		//fechaTerminado: req.body.fechaTerminado,
 		calificacion: 0,
 		feedback: ''
 	});
-  console.log(resp);
 	resp.crearRespuesta((err) => {
 		if(err) return response.serverError(res);
 		return response.creado(res);

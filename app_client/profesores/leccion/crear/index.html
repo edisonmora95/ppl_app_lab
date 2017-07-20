@@ -162,7 +162,10 @@
                     <div v-for="capitulo in capitulosAMostrar" class="capitulo scrollspy section" v-bind:id="capitulo._id">
                       <ul class="preguntas collapsible" data-collapsible="accordion">
                         <li>
-                          <div class="collapsible-header" v-on:click="collapsibleClicked($event)"><h5>{{capitulo.nombre}}</h5></div>
+                          <div class="collapsible-header" v-on:click="collapsibleClicked($event)">
+                                                                      <span><h6>({{capitulo.nombreMateria}})</h6></span>
+                                                                      <h5>{{capitulo.nombre}}</h5>
+                          </div>
                           <div class="collapsible-body question" v-for="pregunta in capitulo.preguntas">
                             <div v-bind:id="'tooltip-' + pregunta._id"
                                v-on:mouseover="showTooltip(pregunta._id, pregunta.descripcion, pregunta.tiempoEstimado)">

@@ -124,10 +124,36 @@ const recalificar = (req, res) => {
 	var id_leccion = req.params.id_leccion;
 	var id_grupo = req.params.id_grupo;
 	var calificacion_nueva = req.body.calificacion;
-	var estudiante = req.body.estudiante;
-	CalificacionModel.calificar(id_leccion, id_grupo, calificacion_nueva, estudiante, (err, doc) => {
-		if(err) return response.serverError(res);
-		return response.okActualizado(res);
+	var id_estudiante = req.body.estudiante;
+  var flag = false;
+  //Cambiar el registro de calificaciones
+	CalificacionModel.calificar(id_leccion, id_grupo, calificacion_nueva, id_estudiante, (err, doc) => {
+		if(err) {
+      return response.serverError(res);
+    }else{
+
+      CalificacionModel.obtenerRegistro(id_leccion, id_grupo, (err, registro) => {
+        //Luego obtengo el registro completo de la calificación. Para usar el array de participantes
+        if(err) {
+          return response.serverError(res);
+        }else{
+          //Luego, a cada participante del registro le añado la calificación a la lección tomada
+          registro[0].participantes.forEach(function(estudianteId){
+            EstudianteModel.calificarLeccion(estudianteId, id_leccion, calificacion_nueva, (err, doc) => {
+              if(err) {
+                flag = true;
+                return response.serverError(res);
+              }
+            });
+          });
+
+          if(!flag){
+            return response.okActualizado(res);
+          }
+        }
+      });
+    }
+		
 	});
 }
 

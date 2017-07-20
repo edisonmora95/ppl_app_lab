@@ -34,7 +34,10 @@
           <div class="row">
             <div class="col s7 col-respuesta">
               <label for="respuesta">Respuesta del Estudiante</label>
-              <p v-for="respuesta in respuestas" v-html="respuesta.respuesta" v-if="pregunta._id == respuesta.pregunta" name="respuesta"></p> 
+              <div v-for="respuesta in respuestas" >
+                <p v-html="respuesta.respuesta" v-if="pregunta._id == respuesta.pregunta" name="respuesta"></p>
+                <img v-bind:src="respuesta.imagenes" v-if="pregunta._id == respuesta.pregunta">
+              </div>
             </div>
             <div class="col s5 col-calificacion">
               <input class="form-control" type="number" name="calificacion" placeholder="Calificación" min="0" max="2" v-bind:id="'calificacion-' + pregunta._id">

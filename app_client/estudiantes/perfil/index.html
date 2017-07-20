@@ -4,7 +4,7 @@
 	<title>Estudiante</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="/bower_components/materialize/bin/materialize.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" type="text/css" href="./estudiantePerfilStyles.css">
 	</head>
@@ -24,6 +24,9 @@
 						<!-- <img class="responsive-img circle" src="https://placehold.it/100x100"> -->
 						<h3>{{estudiante.nombres + ' ' + estudiante.apellidos}}</h3>
 						<p class="gris">{{estudiante.correo}}</p>
+					</section>
+          <section>
+						<a class="waves-effect waves-light btn right btn-small-new" @click="tomarLeccion">Tomar lección</a>
 					</section>
 					<section>
 						<table class="bordered responsive-table centered tabla">
@@ -54,17 +57,14 @@
 							</tbody>
 						</table>
 					</section>
-					<section>
-						<a class="waves-effect waves-light btn pull right btn-small-new" @click="tomarLeccion">Tomar lección</a>
-					</section>
 				</div>
 			</div>
 		</main>
 		<footer>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+			<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+			<script src="/bower_components/vue/dist/vue.min.js"></script>
+			<script src="/bower_components/materialize/bin/materialize.js"></script>
+			<script src="/bower_components/moment/moment.js"></script>
 			<script src="./estudiante.js"></script>
 		</footer>
 	</body>

@@ -29,6 +29,7 @@
     "express": "~4.14.1",
     "express-messages": "^1.0.1",
     "express-session": "^1.15.1",
+    "j-i-c": "^2.0.2",
     "jsondiffpatch": "^0.2.4",
     "jsonwebtoken": "^7.3.0",
     "lodash": "^4.17.4",

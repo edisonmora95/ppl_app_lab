@@ -4,13 +4,13 @@
     <title>Estudiante</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.18/themes/offline-language-spanish-indicator.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/bower_components/materialize/bin/materialize.css">
+    <link rel="stylesheet" href="/bower_components/icon/materialIcons.css">
+    <link rel="stylesheet" href="/bower_components/offline/themes/offline-language-spanish-indicator.css">
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/estudiantesbackground.css">
     <link rel="stylesheet" href="./estudianteLeccionStyles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.18/themes/offline-theme-slide.css">
+    <link rel="stylesheet" href="/css/offline-theme-slide.css">
   </head>
   <body id="grad">
     <header>
@@ -19,105 +19,116 @@
       <div class="border"></div>
     </header>
     <main>
-      <div id="app" class="container">
-        <section id="nombre-leccion">
-          <h2 class="center-align"><b>{{leccion.nombre}}</b></h2>
-        </section>
-        <section id="nombre">
-          <!--Nombre del estudiante-->
-          <h4 class="center-align flow-text">{{estudiante.nombres + ' ' + estudiante.apellidos}}</h4>
-        </section>
-        <div class="timer center-align flow-text">
-          <p><div class="color" id="conectado"></div>Tiempo: <b>{{tiempo}}</b></p>
-        </div>
-        <section id="leccion">
-          <div class="row" id="row-tabs">
-            <div class="col s12">
-              <ul class="tabs-fixed-width tabs">
-                <li class="tab"><a class="active" href="#instrucciones">Instrucciones</a></li>
+         <div id="app" class="container">
+           <section id="nombre-leccion">
+             <h2 class="center-align"><b>{{leccion.nombre}}</b></h2>
+           </section>
+           <section id="nombre">
+             <!--Nombre del estudiante-->
+             <h4 class="center-align flow-text">{{estudiante.nombres + ' ' + estudiante.apellidos}}</h4>
+           </section>
+           <div class="timer center-align flow-text">
+             <p><div class="color" id="conectado"></div>Tiempo: <b>{{tiempo}}</b></p>
+           </div>
+           <section id="leccion">
+             <div class="row" id="row-tabs">
+               <div class="col s12">
+                 <ul class="tabs-fixed-width tabs">
+                   <li class="tab"><a class="active" href="#instrucciones">Instrucciones</a></li>
 
-                <li class="tab" v-for="pregunta in leccion.preguntas"><a v-bind:href="'#' + pregunta.pregunta._id">{{pregunta.ordenPregunta}}</a></li>
-                <li class="tab"><a href="#terminar">Terminar</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="row">
-            <div id="instrucciones" class="col s12">
-              <div class="row row-instruccion">
-                <h5 class="center-align">Instrucciones de la lección</h5>
-                <p>Tienen hasta el tiempo indicado para completar la lección</p>
-                <p>Una vez acabado el tiempo, las preguntas que han respondido se enviarán automáticamente, las que no respondieron se enviarán sin respuesta, y por lo tanto, sin calificación</p>
-                <p>No se olviden de enviar cada respuesta luego de completarla. Si responden una pregunta pero no envían su respuesta, no tendrán la calificación.</p>
-              </div>
-            </div>
-            <div class="col s12" v-bind:id="pregunta._id" v-for="(pregunta, index) in preguntas" style="display: none">
-              <div class="row row-pregunta">
-                <section id="area-pregunta" class="col s12">
-                  <label>Pregunta: </label>
-                  <label><h6 class="pull right"><b>Tiempo estimado: </b>{{pregunta.tiempoEstimado}} minutos</h6></label>
-                  <p v-html="pregunta.descripcion"></p>
-                </section>
-                <hr><hr>
-                <section id="area-respuesta" class="col s12">
-                  <div class="row" id="row-area-respuesta">
-                    <textarea v-bind:id="'textarea-' + pregunta._id" class="materialize-textarea">
+                   <li class="tab" v-for="pregunta in leccion.preguntas"><a v-bind:href="'#' + pregunta.pregunta._id">{{pregunta.ordenPregunta}}</a></li>
+                   <li class="tab"><a href="#terminar">Terminar</a></li>
+                 </ul>
+               </div>
+             </div>
+             <div class="row">
+               <div id="instrucciones" class="col s12">
+                 <div class="row row-instruccion">
+                   <h5 class="center-align">Instrucciones de la lección</h5>
+                   <p>Tienen hasta el tiempo indicado para completar la lección</p>
+                   <p>Una vez acabado el tiempo, las preguntas que han respondido se enviarán automáticamente, las que no respondieron se enviarán sin respuesta, y por lo tanto, sin calificación</p>
+                   <p>No se olviden de enviar cada respuesta luego de completarla. Si responden una pregunta pero no envían su respuesta, no tendrán la calificación.</p>
+                 </div>
+               </div>
+               <div class="col s12" v-bind:id="pregunta._id" v-for="(pregunta, index) in preguntas" style="display: none">
+                 <div class="row row-pregunta">
+                   <section id="area-pregunta" class="col s12">
+                     <label>Pregunta: </label>
+                     <label><h6 class="pull right"><b>Tiempo estimado: </b>{{pregunta.tiempoEstimado}} minutos</h6></label>
+                     <p v-html="pregunta.descripcion"></p>
+                   </section>
+                   <hr><hr>
+                   <section id="area-respuesta" class="col s12">
+                     <div class="row" id="row-area-respuesta">
+                       <textarea v-bind:id="'textarea-' + pregunta._id" class="materialize-textarea">
 
-                    </textarea>
-                    <label>Respuesta</label>
-                    <!--<div v-bind:id="'editor-' + pregunta._id" class="myEditor col s12">
+                       </textarea>
+                      <label>Respuesta</label>
+                      <section style="margin: 3% 0;">
+                        <label>Subir una imagen</label>
+                        <label hidden v-bind:id="'urlImagen-' + pregunta._id">ImagenURL</label>
+                        <br />
+                        <input id="archivo" type='file' @change="getImage(pregunta._id,$event)"/>
+                      </section>
+                      <section>
+                        <img hidden v-bind:id="'source_image-'+ pregunta._id" src="#" alt="your image" />
+                      </section>
+                      <section>
+                        <img hidden v-bind:id="'result_image-'+ pregunta._id" src="#" alt="your image" />
+                      </section>
+                    </div>
+                    <div class="row" id="botones">
+                      <button href="." class="waves-effect waves-light btn pull right" @click="responder(pregunta)" v-bind:id="'btn-responder-' + pregunta._id">Responder</button>
+                    </div>
+                  </section>
+                </div>
+              </div>
 
-                    </div>-->
-                  </div>
-                  <div class="row" id="botones">
-                    <button href="." class="waves-effect waves-light btn pull right" @click="responder(pregunta)" v-bind:id="'btn-responder-' + pregunta._id">Responder</button>
-                  </div>
-                </section>
-              </div>
-            </div>
-            <div id="terminar" class="col s12">
-              <div class="row row-terminar center-align">
-                <section class="col s12">
-                  <h4>Terminar la lección</h4>
-                  <a class="waves-effect waves-light btn" @click="responderTodas">Terminar</a>
-                </section>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- Modal Corregir Respuesta Structure -->
-        <div id="modalCorregirRespuesta" class="modal">
-          <div class="modal-content">
-            <p class="center-align">No se puede corregir una respuesta ya enviada.</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
-          </div>
-        </div>
-        <!-- Modal mostrar imagen -->
-        <div id="modal_Img" class="modal">
-          <div class="modal-content">
-          </div>
-        </div>
-        <!-- Modal Revisar Respuestas Structure -->
-        <div id="modalRevisarRespuestas" class="modal">
-          <div class="modal-content">
-            <p class="center-align">Ha respondido a todas las preguntas de la lección.</p>
-            <p class="center-align">Sin embargo, aún tiene tiempo disponible.</p>
-            <p class="center-align">¿Desea revisar y corregir alguna pregunta anterior o desea terminar la lección?</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="revisarLeccion">Revisar</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="responderTodas">Terminar</a>
-          </div>
-        </div>
-      </div>
-    </main>
-    <footer>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/offline-js/0.7.18/offline.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+               <div id="terminar" class="col s12">
+                 <div class="row row-terminar center-align">
+                   <section class="col s12">
+                     <h4>Terminar la lección</h4>
+                     <a class="waves-effect waves-light btn" @click="responderTodas">Terminar</a>
+                   </section>
+                 </div>
+               </div>
+             </div>
+           </section>
+           <!-- Modal Corregir Respuesta Structure -->
+           <div id="modalCorregirRespuesta" class="modal">
+             <div class="modal-content">
+               <p class="center-align">No se puede corregir una respuesta ya enviada.</p>
+             </div>
+             <div class="modal-footer">
+               <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+             </div>
+           </div>
+           <!-- Modal mostrar imagen -->
+           <div id="modal_Img" class="modal">
+             <div class="modal-content">
+             </div>
+           </div>
+           <!-- Modal Revisar Respuestas Structure -->
+           <div id="modalRevisarRespuestas" class="modal">
+             <div class="modal-content">
+               <p class="center-align">Ha respondido a todas las preguntas de la lección.</p>
+               <p class="center-align">Sin embargo, aún tiene tiempo disponible.</p>
+               <p class="center-align">¿Desea revisar y corregir alguna pregunta anterior o desea terminar la lección?</p>
+             </div>
+             <div class="modal-footer">
+               <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="revisarLeccion">Revisar</a>
+               <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" @click="responderTodas">Terminar</a>
+             </div>
+           </div>
+         </div>
+       </main>
+       <footer>
+      <script src="/bower_components/offline/offline.min.js"></script>
+      <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="/bower_components/vue/dist/vue.min.js"></script>
+      <script src="/bower_components/materialize/bin/materialize.js"></script>
       <script src="/bower_components/socket.io-client/dist/socket.io.min.js"></script>
+      <script src="/bower_components/JIC/src/JIC.js" type="text/javascript"></script>
       <script src="./app.leccion.js"></script>
     </footer>
   </body>

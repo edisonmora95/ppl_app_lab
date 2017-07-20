@@ -64,7 +64,10 @@ CalificacionSchema.statics.calificar = function(id_leccion, id_grupo, calificaci
 
 CalificacionSchema.statics.obtenerRegistroPorLeccion = function(id_leccion, callback){
 	//this.find({leccion: id_leccion}, callback);
-	this.find({leccion: id_leccion}).populate({path: 'participantes'}).exec(callback);
+	this.find({leccion: id_leccion})
+				.populate('participantes', '_id nombres apellidos')
+				.populate('grupo', 'nombre')
+				.exec(callback);
 }
 
 CalificacionSchema.statics.obtenerRegistroPorLeccionCsv = function(id_leccion, callback){

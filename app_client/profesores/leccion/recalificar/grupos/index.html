@@ -34,8 +34,8 @@
             <div class="row">
               <div class="input-field col s12" v-for="(registro, index) in registros">
                 <p>
-                    <input name="group1" type="radio" class="left-align flow-text" :id="registro.grupo" @click="seleccionarGrupo(registro)">
-                    <label :for="registro.grupo">{{registro.nombreGrupo}}</label>
+                    <input name="group1" type="radio" class="left-align flow-text" :id="registro.grupo._id" @click="seleccionarGrupo(registro)">
+                    <label :for="registro.grupo._id">{{registro.grupo.nombre}}</label>
                   </p>
               </div>
             </div>
@@ -49,8 +49,8 @@
               <div class="row">
                 <h1 class="left-align flow-text">{{grupoSeleccionado.nombreGrupo}}</h1>
                 <div class="input-field col s12">
-                  <p v-for="estudiante in estudiantes">
-                    <input :name="grupoSeleccionado.grupo" type="radio" class="left-align flow-text" :id="estudiante._id" @click="seleccionarEstudiante(estudiante)">
+                  <p v-for="estudiante in grupoSeleccionado.participantes">
+                    <input :name="grupoSeleccionado.grupo._id" type="radio" class="left-align flow-text" :id="estudiante._id" @click="seleccionarEstudiante(estudiante)">
                     <label :for="estudiante._id">{{estudiante.nombres+' '+estudiante.apellidos}}<span v-if="estudiante._id === grupoSeleccionado.estudianteCalificado" class="title calificado">    Calificado</span></label>
 
                   </p>
@@ -65,13 +65,9 @@
         </section>
       </main>  
     </div>
-    
-    
     <footer>
       <script src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script src="/bower_components/vue/dist/vue.min.js"></script>
-      <script src="/bower_components/vue-router/dist/vue-router.min.js"></script>
-      <script src="/bower_components/vue-resource/dist/vue-resource.min.js"></script>
       <script src="/bower_components/materialize/bin/materialize.js"></script>
       <script src="/js/navbar.js"></script>
       <script src="./recalificarScript.js"></script>
