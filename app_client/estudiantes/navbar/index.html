@@ -1,12 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
+<header id="#navbar">
+			<div class="contenedor">
+			  <a href="/estudiantes">
+			    <div id="logo">
+			      <div class="row logos">
+			          <div class="col s12 m1 offset-s4 offset-m2">
+			            <img src="/img/thumbnail_espol(blanco).jpg" id="logo-pagina">
+			          </div>
+			          <div class="col s12 m4 offset-s2">
+			              <h5>Sistema de</h5>
+			              <h4>Calificación y Desarrollo PPL</h4>
+			          </div>
+			      </div>
+			  </div>
+			  </a>
+			  <nav>
+			    
+			    <div class="nav-wrapper">
+			      
+			      <ul class="right">
+			        <li><a href="/estudiantes">Inicio</a></li>
+			        <li><a href="/estudiantes/tomar-leccion">Tomar Lección</a></li>
+			        <li><a href="/estudiantes/lecciones">Lecciones</a></li>
+			        <li><a href="/estudiantes">Progreso Academico</a></li>
+			        
+			        
+			        <li>
+			        	<a href="/api/session/logout">
+			            <i style="height: 64px; margin-right: 10px;" class="hide-on-small-only">
+			                <img src="/img/Salir.png" alt="" v-on:click="salir()"
+			                style="cursor: pointer; vertical-align: middle;">
 
-</body>
-</html>
+			            </i>
+			            </a>
+			        </li>
+			      </ul>
+			      <ul class="side-nav" id="mobile-demo">
+			        <li><a href="/estudiantes">Home</a></li>
+			        <li><a href="/estudiantes">Lecciones</a></li>
+			        <li><a href="/estudiantes">Progreso Academico</a></li>
+			        
+			        <li>
+			          <i style="height: 64px; margin-right: 10px;">
+			              <img src="/img/Salir.png" alt="" v-on:click="salir()"
+			              style="cursor: pointer; vertical-align: middle;">
+			          </i>
+			        </li>
+			      </ul>
+			    </div>
+			  </nav>
+			</div>
+
+		</header>
